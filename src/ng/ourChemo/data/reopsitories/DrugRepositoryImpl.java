@@ -63,7 +63,6 @@ public class DrugRepositoryImpl implements DrugRepository {
         if (drugs.isEmpty()) {
             throw new IllegalStateException("Repository is already empty.");
         }
-
         drugs.clear();
     }
 }
