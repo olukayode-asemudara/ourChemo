@@ -1,41 +1,31 @@
 package ng.ourChemo.data.models;
 
 public class User {
-    private String username;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public User(int id, String firstName, String lastName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFullName() {
-        return fullName;
+        return firstName + " " + lastName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+    public  void setLastName(String lastName) {this.lastName = lastName;}
 
-    private String password;
-    private int id;
-    private String fullName;
+    public String getFirstName() {return firstName;}
+    public String getLastName(){return lastName;}
 }

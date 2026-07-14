@@ -11,4 +11,6 @@ public interface DrugRepository {
     List<Drug> findAll();
     void delete(int id);
     void update(Drug drug);
+
+    void deleteAll();
 }

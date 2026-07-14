@@ -2,11 +2,13 @@ package ng.ourChemo.data.reopsitories;
 
 import ng.ourChemo.data.models.User;
 
-public interface UserRepository {
+import java.util.List;
 
-    User save(User user);
-    void delete(User user);
+public interface UserRepository {
+    void save(User User);
+    User findById(int id);
+    List<User> findAll();
+    void delete(int id);
+    void update(User updatedUser);
     void deleteAll();
-    long count();
-    User findById(long id);
 }
