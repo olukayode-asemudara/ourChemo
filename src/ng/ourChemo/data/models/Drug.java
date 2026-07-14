@@ -5,6 +5,15 @@ import java.time.LocalDate;
 public class Drug {
     private int price;
     private String name;
+    private int id;
+    private LocalDate expiryDate;
+    private String brand;
+
+    public Drug(int id, String name, String brand) {
+        this.id = id;
+        this.name = name;
+        this.brand = brand;
+    }
 
     public int getPrice() {
         return price;
@@ -16,10 +25,6 @@ public class Drug {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -45,8 +50,4 @@ public class Drug {
     public void setBrand(String brand) {
         this.brand = brand;
     }
-
-    private int id;
-    private LocalDate expiryDate;
-    private String brand;
 }
