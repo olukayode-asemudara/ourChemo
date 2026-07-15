@@ -55,7 +55,6 @@ public class DrugRepositoryImpl implements DrugRepository {
         existingDrug.setName(updatedDrug.getName());
         existingDrug.setPrice(updatedDrug.getPrice());
         existingDrug.setBrand(updatedDrug.getBrand());
-        existingDrug.setExpiryDate(updatedDrug.getExpiryDate());
     }
 
     @Override
