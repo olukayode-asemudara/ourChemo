@@ -1,7 +1,6 @@
 package ng.ourChemo.data.reopsitories;
 
 import ng.ourChemo.data.models.DispensedDrug;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +38,9 @@ public class DispensedDrugRepositoryImpl implements DispensedDrugRepository {
 
     @Override
     public void update(DispensedDrug updatedDispensedDrug) {
-        for (int i = 0; i < dispensedDrugs.size(); i++) {
-            if (dispensedDrugs.get(i).getId() == updatedDispensedDrug.getId()) {
-                dispensedDrugs.set(i, updatedDispensedDrug);
+        for (int index = 0; index < dispensedDrugs.size(); index++) {
+            if (dispensedDrugs.get(index).getId() == updatedDispensedDrug.getId()) {
+                dispensedDrugs.set(index, updatedDispensedDrug);
                 return;
             }
         }

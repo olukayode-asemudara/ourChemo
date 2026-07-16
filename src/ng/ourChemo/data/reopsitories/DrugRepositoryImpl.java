@@ -40,9 +40,9 @@ public class DrugRepositoryImpl implements DrugRepository {
 
     @Override
     public void update(Drug updatedDrug) {
-        for (int i = 0; i < drugs.size(); i++) {
-            if (drugs.get(i).getId() == updatedDrug.getId()) {
-                drugs.set(i, updatedDrug);
+        for (int index = 0; index < drugs.size(); index++) {
+            if (drugs.get(index).getId() == updatedDrug.getId()) {
+                drugs.set(index, updatedDrug);
                 return;
             }
         }
