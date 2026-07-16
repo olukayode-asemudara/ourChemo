@@ -1,4 +1,4 @@
-package ng.ourChemo.data.reopsitories;
+package ng.ourChemo.data.repositories;
 
 public class DispensedDrugRepositoryTest {
 }

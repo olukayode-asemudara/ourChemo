@@ -1,7 +1,6 @@
 package ng.ourChemo.data.repositories;
 
 import ng.ourChemo.data.models.Drug;
-import ng.ourChemo.data.reopsitories.DrugRepository;
 
 import java.util.ArrayList;
 import java.util.List;

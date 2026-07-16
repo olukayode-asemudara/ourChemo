@@ -1,7 +1,6 @@
-package ng.ourChemo.data.reopsitories;
+package ng.ourChemo.data.repositories;
 
 import ng.ourChemo.data.models.Drug;
-import ng.ourChemo.data.repositories.DrugRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

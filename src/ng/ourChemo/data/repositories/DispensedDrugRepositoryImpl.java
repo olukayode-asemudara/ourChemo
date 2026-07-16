@@ -1,4 +1,4 @@
-package ng.ourChemo.data.reopsitories;
+package ng.ourChemo.data.repositories;
 
 import ng.ourChemo.data.models.DispensedDrug;
 import java.util.ArrayList;
