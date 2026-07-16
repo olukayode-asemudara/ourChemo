@@ -24,10 +24,6 @@ public class DispensedDrugs {
         return saleDateTime;
     }
 
-    public void setSaleDateTime(LocalDateTime saleDateTime) {
-        this.saleDateTime = saleDateTime;
-    }
-
     public User getDispenseBy() {
         return dispenseBy;
     }
