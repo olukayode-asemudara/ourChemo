@@ -1,6 +1,7 @@
-package ng.ourChemo.data.reopsitories;
+package ng.ourChemo.data.repositories;
 
 import ng.ourChemo.data.models.Drug;
+import ng.ourChemo.data.reopsitories.DrugRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,6 @@ public class DrugRepositoryImpl implements DrugRepository {
 
     @Override
     public void save(Drug drug) {
-        if (drug == null) {
-            throw new IllegalArgumentException("Drug cannot be null.");
-        }
-        for (Drug existingDrug : drugs) {
-            if (existingDrug.getId() == drug.getId()) {
-                throw new IllegalStateException(
-                        "Drug with id " + drug.getId() + " already exists."
-                );
-            }
-        }
         drugs.add(drug);
     }
 
@@ -31,8 +22,7 @@ public class DrugRepositoryImpl implements DrugRepository {
                 return drug;
             }
         }
-        throw new IllegalArgumentException(
-                "Drug with id " + id + " does not exist.");
+        return null;
     }
 
     @Override
@@ -43,25 +33,23 @@ public class DrugRepositoryImpl implements DrugRepository {
     @Override
     public void delete(int id) {
         Drug drug = findById(id);
-        drugs.remove(drug);
+        if (drug != null) {
+            drugs.remove(drug);
+        }
     }
 
     @Override
     public void update(Drug updatedDrug) {
-        if (updatedDrug == null) {
-            throw new IllegalArgumentException("Updated drug cannot be null.");
+        for (int i = 0; i < drugs.size(); i++) {
+            if (drugs.get(i).getId() == updatedDrug.getId()) {
+                drugs.set(i, updatedDrug);
+                return;
+            }
         }
-        Drug existingDrug = findById(updatedDrug.getId());
-        existingDrug.setName(updatedDrug.getName());
-        existingDrug.setPrice(updatedDrug.getPrice());
-        existingDrug.setBrand(updatedDrug.getBrand());
     }
 
     @Override
     public void deleteAll() {
-        if (drugs.isEmpty()) {
-            throw new IllegalStateException("Repository is already empty.");
-        }
         drugs.clear();
     }
 }

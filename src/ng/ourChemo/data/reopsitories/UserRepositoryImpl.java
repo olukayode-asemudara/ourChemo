@@ -5,62 +5,50 @@ import ng.ourChemo.data.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRepositoryImpl implements UserRepository{
-    private final List<User> Users = new ArrayList<>();
+public class UserRepositoryImpl implements UserRepository {
+
+    private final List<User> users = new ArrayList<>();
 
     @Override
-    public void save(User User) {
-        if (User == null) {
-            throw new IllegalArgumentException("User cannot be null.");
-        }
-        for (User existingUser : Users) {
-            if (existingUser.getId() == User.getId()) {
-                throw new IllegalStateException(
-                        "User with id " + User.getId() + " already exists."
-                );
-            }
-        }
-        Users.add(User);
+    public void save(User user) {
+        users.add(user);
     }
 
     @Override
     public User findById(int id) {
-        for (User User : Users) {
-            if (User.getId() == id) {
-                return User;
+        for (User user : users) {
+            if (user.getId() == id) {
+                return user;
             }
         }
-        throw new IllegalArgumentException(
-                "User with id " + id + " does not exist.");
+        return null;
     }
 
     @Override
     public List<User> findAll() {
-        return new ArrayList<>(Users);
+        return new ArrayList<>(users);
     }
 
     @Override
     public void delete(int id) {
-        User User = findById(id);
-        Users.remove(User);
+        User user = findById(id);
+        if (user != null) {
+            users.remove(user);
+        }
     }
 
     @Override
     public void update(User updatedUser) {
-        if (updatedUser == null) {
-            throw new IllegalArgumentException("Updated User cannot be null.");
+        for (int index = 0; index < users.size(); index++) {
+            if (users.get(index).getId() == updatedUser.getId()) {
+                users.set(index, updatedUser);
+                return;
+            }
         }
-        User existingUser = findById(updatedUser.getId());
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setPassword(updatedUser.getPassword());
-        existingUser.setFullName(updatedUser.getFullName());
     }
 
     @Override
     public void deleteAll() {
-        if (Users.isEmpty()) {
-            throw new IllegalStateException("Repository is already empty.");
-        }
-        Users.clear();
+        users.clear();
     }
 }

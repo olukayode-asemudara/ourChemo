@@ -1,70 +1,61 @@
-package ng.ourChemo.data.reopsitories;
+package ng.ourChemo.data.repositories;
 
 import ng.ourChemo.data.models.DispensedDrug;
 import ng.ourChemo.data.models.Drug;
+import ng.ourChemo.data.reopsitories.DispensedDrugRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DispensedDrugsRepositoryImpl implements DispensedDrugsRepository{
+public class DispensedDrugsRepositoryImpl implements DispensedDrugRepository {
 
-    private final List<DispensedDrug> DispensedDrugs = new ArrayList<>();
+    private final List<DispensedDrug> dispensedDrugs = new ArrayList<>();
 
     @Override
-    public void save(DispensedDrug DispensedDrug) {
-        if (DispensedDrug == null) {
-            throw new IllegalArgumentException("DispensedDrug cannot be null.");
-        }
-        for (DispensedDrug existingDispensedDrug : DispensedDrugs) {
-            if (existingDispensedDrug.getId() == DispensedDrug.getId()) {
-                throw new IllegalStateException(
-                        "DispensedDrug with id " + DispensedDrug.getId() + " already exists."
-                );
-            }
-        }
-        DispensedDrugs.add(DispensedDrug);
+    public void save(DispensedDrug dispensedDrug) {
+        dispensedDrugs.add(dispensedDrug);
     }
 
     @Override
     public DispensedDrug findById(int id) {
-        for (DispensedDrug DispensedDrug : DispensedDrugs) {
-            if (DispensedDrug.getId() == id) {
-                return DispensedDrug;
+        for (DispensedDrug dispensedDrug : dispensedDrugs) {
+            if (dispensedDrug.getId() == id) {
+                return dispensedDrug;
             }
         }
-        throw new IllegalArgumentException(
-                "DispensedDrug with id " + id + " does not exist.");
+        return null;
     }
 
     @Override
     public List<DispensedDrug> findAll() {
-        return new ArrayList<>(DispensedDrugs);
+        return new ArrayList<>(dispensedDrugs);
     }
 
     @Override
     public void delete(int id) {
-        DispensedDrug DispensedDrug = findById(id);
-        DispensedDrugs.remove(DispensedDrug);
+        DispensedDrug dispensedDrug = findById(id);
+        if (dispensedDrug != null) {
+            dispensedDrugs.remove(dispensedDrug);
+        }
     }
 
-    @Override
-    public void update(Drug drug) {
-
-    }
+//    @Override
+//    public void update(Drug drug) {
+//
+//    }
 
     @Override
     public void update(DispensedDrug updatedDispensedDrug) {
-        if (updatedDispensedDrug == null) {
-            throw new IllegalArgumentException("Updated DispensedDrug cannot be null.");
+        for (int i = 0; i < dispensedDrugs.size(); i++) {
+            if (dispensedDrugs.get(i).getId() == updatedDispensedDrug.getId()) {
+                dispensedDrugs.set(i, updatedDispensedDrug);
+                return;
+            }
         }
-        DispensedDrug existingDispensedDrug = findById(updatedDispensedDrug.getId());
     }
 
     @Override
     public void deleteAll() {
-        if (DispensedDrugs.isEmpty()) {
-            throw new IllegalStateException("Repository is already empty.");
-        }
-        DispensedDrugs.clear();
+        dispensedDrugs.clear();
     }
 }
