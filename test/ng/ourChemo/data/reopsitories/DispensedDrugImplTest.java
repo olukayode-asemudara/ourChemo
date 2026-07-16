@@ -39,4 +39,16 @@ public class DispensedDrugImplTest {
         repository.delete(0);
         assertEquals(0, repository.findAll().size());
     }
+
+    @Test
+    public void testAddTwoDispensedDrugs(){
+        dispensedDrug.setDrug(drug);
+        DispensedDrug dispensedDrug1 = new DispensedDrug();
+        Drug drug2 = new Drug();
+        dispensedDrug.setDrug(drug2);
+        repository.save(dispensedDrug);
+        dispensedDrug1.setId(1);
+        repository.save(dispensedDrug1);
+        assertEquals(2, repository.findAll().size());
+    }
 }
