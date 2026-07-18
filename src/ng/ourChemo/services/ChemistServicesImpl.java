@@ -8,8 +8,19 @@ public class ChemistServicesImpl implements ChemistServices {
 
     private DrugRepository drugRepository;
 
+    public ChemistServicesImpl(DrugRepository drugRepository) {
+        this.drugRepository = drugRepository;
+    }
+
     @Override
     public void addDrug(Drug drug) {
+        List<Drug> drugs = drugRepository.findAll();
+        for (Drug existing : drugs) {
+            if (existing.getName().equalsIgnoreCase(drug.getName())
+                    && existing.getBrand().equalsIgnoreCase(drug.getBrand())) {
+                throw new IllegalArgumentException("Drug already exists.");
+            }
+        }
         drugRepository.save(drug);
     }
 

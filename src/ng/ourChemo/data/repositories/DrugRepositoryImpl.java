@@ -7,10 +7,13 @@ import java.util.List;
 
 public class DrugRepositoryImpl implements DrugRepository {
 
-    private final List<Drug> drugs = new ArrayList<>();
+    private long count;
+
+    private static List<Drug> drugs = new ArrayList<>();
 
     @Override
     public void save(Drug drug) {
+        drug.setId(++count);
         drugs.add(drug);
     }
 

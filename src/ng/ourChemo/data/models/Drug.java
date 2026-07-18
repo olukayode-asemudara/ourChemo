@@ -1,24 +1,15 @@
 package ng.ourChemo.data.models;
 
 public class Drug {
-    private int price;
     private String name;
-    private int id;
+    private long id;
     private String brand;
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) { this.id = id;}
+    public void setId(long id) { this.id = id;}
 
     public String getName() {
         return name;
