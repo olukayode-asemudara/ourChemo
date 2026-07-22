@@ -10,7 +10,7 @@ public interface AuthServices {
 
     void login(String username, String password);
 
-    void logout();
+    void logout(String username);
 
     boolean isLoggedIn();
 

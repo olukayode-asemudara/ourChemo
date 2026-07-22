@@ -5,59 +5,70 @@ import ng.ourChemo.data.repositories.DrugRepository;
 import ng.ourChemo.data.repositories.DrugRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChemistServicesTest {
 
     private DrugRepository repository;
     private Drug drug;
     private ChemistServices chemist;
+    private AuthServices authService;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         repository = new DrugRepositoryImpl();
         repository.deleteAll();
+        authService = new AuthServicesImpl();
+        authService.registerUser(
+                "chemist",
+                "Olukayode Kay",
+                "1234"
+        );
+        authService.login(
+                "chemist",
+                "1234"
+        );
+        chemist = new ChemistServicesImpl(repository);
+        chemist.setAuthServices(authService);
         drug = new Drug();
         drug.setName("Paracetamol");
         drug.setBrand("Emzor");
-        chemist = new ChemistServicesImpl(repository);
     }
 
     @Test
-    public void testEmptyDrugRepository(){
+    public void shouldStartWithEmptyDrugRepository() {
         assertEquals(0, repository.findAll().size());
     }
 
     @Test
-    public void testAddDrugGeneratesIDAutomatically(){
+    public void shouldAllowLoggedInChemistToGenerateDrugIdWhenDrugIsAdded() {
         chemist.addDrug(drug);
-        System.out.println(drug.getId());
         assertEquals(1, drug.getId());
     }
 
     @Test
-    public void testGetDrugById(){
+    public void shouldAllowLoggedInChemistToFindDrugById() {
         chemist.addDrug(drug);
         Drug foundDrug = chemist.getDrugById(1);
         assertEquals("Paracetamol", foundDrug.getName());
     }
 
     @Test
-    void testAddDrug() {
+    public void shouldAllowLoggedInChemistToAddDrug() {
         chemist.addDrug(drug);
         assertEquals(1, chemist.getAllDrugs().size());
     }
 
     @Test
-    void testDeleteDrug() {
+    public void shouldAllowLoggedInChemistToDeleteDrug() {
         chemist.addDrug(drug);
         chemist.deleteDrug(1);
         assertEquals(0, chemist.getAllDrugs().size());
     }
 
     @Test
-    public void testDeleteAllDrugs(){
+    public void shouldAllowLoggedInChemistToDeleteAllDrugs() {
         chemist.addDrug(drug);
         Drug secondDrug = new Drug();
         secondDrug.setName("Ibuprofen");
@@ -68,7 +79,7 @@ public class ChemistServicesTest {
     }
 
     @Test
-    public void testAddDifferentDrugs(){
+    public void shouldAllowLoggedInChemistToAddDifferentDrugs() {
         chemist.addDrug(drug);
         Drug secondDrug = new Drug();
         secondDrug.setName("Ibuprofen");
@@ -78,19 +89,19 @@ public class ChemistServicesTest {
     }
 
     @Test
-    void testAddDrugWithSameName(){
+    public void shouldThrowExceptionWhenLoggedInChemistAddsDuplicateDrug() {
         chemist.addDrug(drug);
-        Drug mydrug = new Drug();
-        mydrug.setName("Paracetamol");
-        mydrug.setBrand("Emzor");
+        Drug secondDrug = new Drug();
+        secondDrug.setName("Paracetamol");
+        secondDrug.setBrand("Emzor");
         assertThrows(
                 IllegalArgumentException.class,
-                () -> chemist.addDrug(mydrug)
+                () -> chemist.addDrug(secondDrug)
         );
     }
 
     @Test
-    public void testAddSameDrugDifferentBrand(){
+    public void shouldAllowLoggedInChemistToAddDrugWithSameNameButDifferentBrand() {
         chemist.addDrug(drug);
         Drug secondDrug = new Drug();
         secondDrug.setName("Paracetamol");
@@ -100,7 +111,7 @@ public class ChemistServicesTest {
     }
 
     @Test
-    public void testAddDifferentDrugSameBrand(){
+    public void shouldAllowLoggedInChemistToAddDrugWithDifferentNameButSameBrand() {
         chemist.addDrug(drug);
         Drug secondDrug = new Drug();
         secondDrug.setName("Vitamin C");
@@ -110,10 +121,19 @@ public class ChemistServicesTest {
     }
 
     @Test
-    public void testUpdateDrug(){
+    public void shouldAllowLoggedInChemistToUpdateDrug() {
         chemist.addDrug(drug);
         drug.setBrand("GSK");
         chemist.updateDrug(drug);
         assertEquals("GSK", chemist.getDrugById(1).getBrand());
+    }
+
+    @Test
+    public void shouldPreventLoggedOutChemistFromAddingDrug() {
+        authService.logout("chemist");
+        assertThrows(
+                IllegalStateException.class,
+                () -> chemist.addDrug(drug)
+        );
     }
 }

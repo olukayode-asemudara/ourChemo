@@ -25,6 +25,16 @@ public class AuthServicesTest {
     }
 
     @Test
+    public void shouldNotBeLoggedInAfterRegistration() {
+        authService.registerUser(
+                "kay",
+                "Asemudara",
+                "1234"
+        );
+        assertFalse(authService.isLoggedIn());
+    }
+
+    @Test
     public void testRegisterTwoUsers() {
         authService.registerUser(
                 "kay",
@@ -108,7 +118,7 @@ public class AuthServicesTest {
                 "kay",
                 "1234"
         );
-        authService.logout();
+        authService.logout("kay");
         assertFalse(authService.isLoggedIn());
     }
 }

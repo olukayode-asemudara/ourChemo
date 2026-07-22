@@ -8,7 +8,7 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository {
 
     private int count;
-    private final List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     @Override
     public void save(User user) {

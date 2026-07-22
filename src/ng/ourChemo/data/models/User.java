@@ -6,6 +6,12 @@ public class User {
     private String fullName;
     private String password;
 
+    public boolean isLoggedIn() {return loggedIn;}
+
+    public void setLoggedIn(boolean loggedIn) {this.loggedIn = loggedIn;}
+
+    private boolean loggedIn;
+
     public String getFullName() {
         return fullName;
     }

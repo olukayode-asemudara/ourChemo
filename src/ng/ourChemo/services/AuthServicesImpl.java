@@ -8,13 +8,12 @@ import java.util.List;
 
 public class AuthServicesImpl implements AuthServices {
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
+    private UserRepository userRepository = new UserRepositoryImpl();
 
     private User loggedInUser;
 
     @Override
     public void registerUser(String username, String fullName, String password) {
-
         for (User user : userRepository.findAll()) {
             if (user.getUsername().equalsIgnoreCase(username)) {
                 throw new IllegalArgumentException("Username already exists.");
@@ -40,8 +39,11 @@ public class AuthServicesImpl implements AuthServices {
     }
 
     @Override
-    public void logout() {
-        loggedInUser = null;
+    public void logout(String username) {
+        if (loggedInUser != null &&
+                loggedInUser.getUsername().equalsIgnoreCase(username)) {
+            loggedInUser = null;
+        }
     }
 
     @Override
