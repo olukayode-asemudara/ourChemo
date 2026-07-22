@@ -30,6 +30,20 @@ public class ChemistServicesTest {
     }
 
     @Test
+    public void testAddDrugGeneratesIDAutomatically(){
+        chemist.addDrug(drug);
+        System.out.println(drug.getId());
+        assertEquals(1, drug.getId());
+    }
+
+    @Test
+    public void testGetDrugById(){
+        chemist.addDrug(drug);
+        Drug foundDrug = chemist.getDrugById(1);
+        assertEquals("Paracetamol", foundDrug.getName());
+    }
+
+    @Test
     void testAddDrug() {
         chemist.addDrug(drug);
         assertEquals(1, chemist.getAllDrugs().size());
@@ -43,6 +57,27 @@ public class ChemistServicesTest {
     }
 
     @Test
+    public void testDeleteAllDrugs(){
+        chemist.addDrug(drug);
+        Drug secondDrug = new Drug();
+        secondDrug.setName("Ibuprofen");
+        secondDrug.setBrand("Emzor");
+        chemist.addDrug(secondDrug);
+        chemist.deleteAllDrugs();
+        assertEquals(0, chemist.getAllDrugs().size());
+    }
+
+    @Test
+    public void testAddDifferentDrugs(){
+        chemist.addDrug(drug);
+        Drug secondDrug = new Drug();
+        secondDrug.setName("Ibuprofen");
+        secondDrug.setBrand("Emzor");
+        chemist.addDrug(secondDrug);
+        assertEquals(2, chemist.getAllDrugs().size());
+    }
+
+    @Test
     void testAddDrugWithSameName(){
         chemist.addDrug(drug);
         Drug mydrug = new Drug();
@@ -52,5 +87,33 @@ public class ChemistServicesTest {
                 IllegalArgumentException.class,
                 () -> chemist.addDrug(mydrug)
         );
+    }
+
+    @Test
+    public void testAddSameDrugDifferentBrand(){
+        chemist.addDrug(drug);
+        Drug secondDrug = new Drug();
+        secondDrug.setName("Paracetamol");
+        secondDrug.setBrand("GSK");
+        chemist.addDrug(secondDrug);
+        assertEquals(2, chemist.getAllDrugs().size());
+    }
+
+    @Test
+    public void testAddDifferentDrugSameBrand(){
+        chemist.addDrug(drug);
+        Drug secondDrug = new Drug();
+        secondDrug.setName("Vitamin C");
+        secondDrug.setBrand("Emzor");
+        chemist.addDrug(secondDrug);
+        assertEquals(2, chemist.getAllDrugs().size());
+    }
+
+    @Test
+    public void testUpdateDrug(){
+        chemist.addDrug(drug);
+        drug.setBrand("GSK");
+        chemist.updateDrug(drug);
+        assertEquals("GSK", chemist.getDrugById(1).getBrand());
     }
 }
