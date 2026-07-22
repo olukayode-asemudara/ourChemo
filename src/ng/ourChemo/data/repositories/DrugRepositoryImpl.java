@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DrugRepositoryImpl implements DrugRepository {
 
-    private long count;
+    private static long count;
 
     private static List<Drug> drugs = new ArrayList<>();
 
@@ -53,5 +53,6 @@ public class DrugRepositoryImpl implements DrugRepository {
     @Override
     public void deleteAll() {
         drugs.clear();
+        count = 0;
     }
 }

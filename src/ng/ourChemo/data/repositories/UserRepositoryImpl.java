@@ -7,10 +7,12 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
+    private int count;
     private final List<User> users = new ArrayList<>();
 
     @Override
     public void save(User user) {
+        user.setId(++count);
         users.add(user);
     }
 
@@ -27,6 +29,16 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAll() {
         return new ArrayList<>(users);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override
